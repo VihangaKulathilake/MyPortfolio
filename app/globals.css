@@ -1,26 +1,184 @@
 @import "tailwindcss";
 
+@theme {
+  --color-brand-blue: #00f2fe;
+  --color-brand-purple: #4facfe;
+  --color-brand-gradient-start: #00f2fe;
+  --color-brand-gradient-end: #f355da;
+  
+  --font-sans: var(--font-geist-sans), Inter, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background-light: #f8fafc;
+  --foreground-light: #0f172a;
+  --background-dark: #03001e;
+  --foreground-dark: #f8fafc;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html {
+  scroll-behavior: smooth;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #03001e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #00f2fe, #f355da);
+  border-radius: 9999px;
+}
+
+/* Custom Cursor styling with high-contrast difference blending */
+.custom-cursor {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #00f2fe;
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transition: width 0.15s ease, height 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.custom-cursor-dot {
+  width: 6px;
+  height: 6px;
+  background-color: #f355da;
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+}
+
+.custom-cursor.hovered {
+  width: 44px;
+  height: 44px;
+  background-color: rgba(0, 242, 254, 0.2);
+  border-color: #f355da;
+}
+
+/* Selection background */
+::selection {
+  background-color: #f355da;
+  color: #000;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  background-color: var(--background-light);
+  color: var(--foreground-light);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+}
+
+.dark body {
+  background-color: var(--background-dark);
+  color: var(--foreground-dark);
+}
+
+/* Cyber Grid Backdrop */
+.hype-grid {
+  background-image: radial-gradient(rgba(0, 242, 254, 0.08) 1.5px, transparent 1.5px);
+  background-size: 32px 32px;
+}
+
+.dark .hype-grid {
+  background-image: radial-gradient(rgba(243, 85, 218, 0.12) 1.5px, transparent 1.5px);
+}
+
+/* Glassmorphism style utility */
+.glass {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.dark .glass {
+  background: rgba(3, 0, 30, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 242, 254, 0.15);
+}
+
+/* Border Beam Hype Card */
+.hype-card {
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hype-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  padding: 1.5px;
+  background: linear-gradient(to bottom right, #00f2fe, #4facfe, #f355da);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.15;
+  transition: opacity 0.4s ease, shadow 0.4s ease;
+}
+
+.hype-card:hover::before {
+  opacity: 1;
+}
+
+/* Glow Heading utility */
+.text-glow {
+  text-shadow: 0 0 40px rgba(0, 242, 254, 0.3);
+}
+
+.dark .text-glow {
+  text-shadow: 0 0 40px rgba(243, 85, 218, 0.4);
+}
+
+/* Animated background glow elements */
+.glow-element {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.2;
+  pointer-events: none;
+  z-index: 0;
+  animation: float-slow 15s infinite alternate;
+}
+
+.dark .glow-element {
+  opacity: 0.35;
+}
+
+@keyframes float-slow {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(60px, 40px) scale(1.2);
+  }
+  100% {
+    transform: translate(-40px, -60px) scale(0.9);
+  }
 }
