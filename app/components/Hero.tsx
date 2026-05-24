@@ -201,7 +201,7 @@ export default function Hero() {
           <div className="relative w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] aspect-square rounded-3xl overflow-hidden shadow-2xl p-1.5 bg-gradient-to-tr from-[#00f2fe] via-[#4facfe] to-[#f355da]">
             <div className="w-full h-full rounded-[20px] bg-slate-900 overflow-hidden relative">
               <Image
-                src="/avatar.png"
+                src="/images/HRI_1584.jpg"
                 alt="Vihanga Profile Image"
                 fill
                 priority
