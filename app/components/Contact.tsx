@@ -8,17 +8,19 @@ import { contactInfo } from '../data';
 interface FormData {
   name: string;
   email: string;
+  subject: string;
   message: string;
 }
 
 interface FormErrors {
   name?: string;
   email?: string;
+  subject?: string;
   message?: string;
 }
 
 export default function Contact() {
-  const [formData, setFormData] = useState<FormData>({ name: '', email: '', message: '' });
+  const [formData, setFormData] = useState<FormData>({ name: '', email: '', subject: '', message: '' });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
@@ -26,15 +28,15 @@ export default function Contact() {
   const validate = (): boolean => {
     const tempErrors: FormErrors = {};
     if (!formData.name.trim()) tempErrors.name = 'Name is required';
-    
+
     if (!formData.email.trim()) {
       tempErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       tempErrors.email = 'Please enter a valid email address';
     }
-    
+    if (!formData.subject.trim()) tempErrors.subject = 'Subject is required';
     if (!formData.message.trim()) tempErrors.message = 'Message is required';
-    
+
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
   };
@@ -53,15 +55,21 @@ export default function Contact() {
     if (!validate()) return;
 
     setIsSubmitting(true);
-    
-    // Simulate API request
+
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      setSubmitSuccess(true);
-      setFormData({ name: '', email: '', message: '' });
-      
-      // Auto hide success notice after 5 seconds
-      setTimeout(() => setSubmitSuccess(false), 5000);
+      const response = await fetch('/api/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      if (response.ok) {
+        setSubmitSuccess(true);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        setTimeout(() => setSubmitSuccess(false), 5000);
+      } else {
+        // Handle error states here
+        throw new Error('Failed to send message');
+      }
     } catch (err) {
       console.error(err);
     } finally {
@@ -75,7 +83,7 @@ export default function Contact() {
       <div className="absolute bottom-0 right-0 glow-element bg-purple-500/10 dark:bg-purple-500/5 translate-x-1/2 translate-y-1/2" />
 
       <div className="mx-auto max-w-7xl px-6 md:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-16">
           <motion.h2
@@ -106,7 +114,7 @@ export default function Contact() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          
+
           {/* Contact Details & Info Card */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -119,7 +127,7 @@ export default function Contact() {
               <h3 className="text-xl font-bold mb-6 text-slate-800 dark:text-white">
                 Contact Information
               </h3>
-              
+
               <div className="space-y-6">
                 {/* Email */}
                 <div className="flex items-start gap-4">
@@ -200,7 +208,7 @@ export default function Contact() {
               </h3>
 
               <form onSubmit={handleSubmit} className="space-y-6">
-                
+
                 {/* Name */}
                 <div className="flex flex-col gap-2">
                   <label htmlFor="name" className="text-sm font-semibold text-slate-600 dark:text-slate-300">
@@ -212,11 +220,10 @@ export default function Contact() {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className={`h-11 px-4 rounded-xl border bg-white/50 dark:bg-slate-950/20 text-sm transition-all duration-300 focus:outline-hidden focus:ring-2 focus:ring-[#00f2fe]/25 ${
-                      errors.name
-                        ? 'border-rose-500 focus:border-rose-500'
-                        : 'border-slate-200 dark:border-slate-800 focus:border-[#00f2fe] dark:focus:border-[#00f2fe]'
-                    }`}
+                    className={`h-11 px-4 rounded-xl border bg-white/50 dark:bg-slate-950/20 text-sm transition-all duration-300 focus:outline-hidden focus:ring-2 focus:ring-[#00f2fe]/25 ${errors.name
+                      ? 'border-rose-500 focus:border-rose-500'
+                      : 'border-slate-200 dark:border-slate-800 focus:border-[#00f2fe] dark:focus:border-[#00f2fe]'
+                      }`}
                     placeholder="John Doe"
                   />
                   {errors.name && (
@@ -235,15 +242,36 @@ export default function Contact() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className={`h-11 px-4 rounded-xl border bg-white/50 dark:bg-slate-950/20 text-sm transition-all duration-300 focus:outline-hidden focus:ring-2 focus:ring-[#00f2fe]/25 ${
-                      errors.email
-                        ? 'border-rose-500 focus:border-rose-500'
-                        : 'border-slate-200 dark:border-slate-800 focus:border-[#00f2fe] dark:focus:border-[#00f2fe]'
-                    }`}
+                    className={`h-11 px-4 rounded-xl border bg-white/50 dark:bg-slate-950/20 text-sm transition-all duration-300 focus:outline-hidden focus:ring-2 focus:ring-[#00f2fe]/25 ${errors.email
+                      ? 'border-rose-500 focus:border-rose-500'
+                      : 'border-slate-200 dark:border-slate-800 focus:border-[#00f2fe] dark:focus:border-[#00f2fe]'
+                      }`}
                     placeholder="johndoe@example.com"
                   />
                   {errors.email && (
                     <span className="text-xs font-semibold text-rose-500">{errors.email}</span>
+                  )}
+                </div>
+
+                {/* Subject */}
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="subject" className="text-sm font-semibold text-slate-600 dark:text-slate-300">
+                    Subject
+                  </label>
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    className={`h-11 px-4 rounded-xl border bg-white/50 dark:bg-slate-950/20 text-sm transition-all duration-300 focus:outline-hidden focus:ring-2 focus:ring-[#00f2fe]/25 ${errors.subject
+                      ? 'border-rose-500 focus:border-rose-500'
+                      : 'border-slate-200 dark:border-slate-800 focus:border-[#00f2fe] dark:focus:border-[#00f2fe]'
+                      }`}
+                    placeholder="Subject"
+                  />
+                  {errors.subject && (
+                    <span className="text-xs font-semibold text-rose-500">{errors.subject}</span>
                   )}
                 </div>
 
@@ -255,15 +283,13 @@ export default function Contact() {
                   <textarea
                     id="message"
                     name="message"
-                    rows={5}
                     value={formData.message}
                     onChange={handleChange}
-                    className={`p-4 rounded-xl border bg-white/50 dark:bg-slate-950/20 text-sm transition-all duration-300 focus:outline-hidden focus:ring-2 focus:ring-[#00f2fe]/25 resize-none ${
-                      errors.message
-                        ? 'border-rose-500 focus:border-rose-500'
-                        : 'border-slate-200 dark:border-slate-800 focus:border-[#00f2fe] dark:focus:border-[#00f2fe]'
-                    }`}
-                    placeholder="Type your message here..."
+                    className={`min-h-[140px] px-4 py-3 rounded-xl border bg-white/50 dark:bg-slate-950/20 text-sm transition-all duration-300 focus:outline-hidden focus:ring-2 focus:ring-[#00f2fe]/25 ${errors.message
+                      ? 'border-rose-500 focus:border-rose-500'
+                      : 'border-slate-200 dark:border-slate-800 focus:border-[#00f2fe] dark:focus:border-[#00f2fe]'
+                      }`}
+                    placeholder="Tell me about your project..."
                   />
                   {errors.message && (
                     <span className="text-xs font-semibold text-rose-500">{errors.message}</span>
