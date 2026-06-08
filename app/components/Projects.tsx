@@ -77,24 +77,26 @@ export default function Projects() {
                 className="glass hype-card rounded-3xl overflow-hidden shadow-xl border border-slate-100 dark:border-slate-800 flex flex-col lg:flex-row h-full cursor-pointer group"
               >
                 {/* Image Section */}
-                <div className="relative h-64 lg:h-auto lg:w-1/2 min-h-[300px] bg-slate-100 dark:bg-slate-900 overflow-hidden">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    priority={index === 0}
-                    className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
-                  />
-                  <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/40 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                    <span className="px-4 py-2 rounded-xl bg-white/90 dark:bg-slate-900/90 text-sm font-semibold text-slate-800 dark:text-white shadow-lg backdrop-blur-xs flex items-center gap-2">
-                      <FiGithub className="w-4 h-4" />
-                      View Repository
-                    </span>
+                {project.image && (
+                  <div className="relative h-64 lg:h-auto lg:w-1/2 min-h-[300px] bg-slate-100 dark:bg-slate-900 overflow-hidden border-b lg:border-b-0 lg:border-r border-slate-100 dark:border-slate-800">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      priority={index === 0}
+                      className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
+                    />
+                    <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/40 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                      <span className="px-4 py-2 rounded-xl bg-white/90 dark:bg-slate-900/90 text-sm font-semibold text-slate-800 dark:text-white shadow-lg backdrop-blur-xs flex items-center gap-2">
+                        <FiGithub className="w-4 h-4" />
+                        View Repository
+                      </span>
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* Details Section */}
-                <div className="p-8 lg:w-1/2 flex flex-col justify-between gap-6">
+                <div className={`p-8 flex flex-col justify-between gap-6 ${project.image ? 'lg:w-1/2' : 'w-full'}`}>
                   <div>
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="text-2xl font-black text-slate-800 dark:text-white group-hover:text-[#00f2fe] transition-colors duration-300">
