@@ -84,7 +84,7 @@ export default function About() {
                   <h4 className="font-semibold text-slate-800 dark:text-white">
                     B.Sc. (Hons) in Software Engineering
                   </h4>
-                  <p className="text-sm text-indigo-600 dark:text-indigo-400 font-medium">University of Computing • 2023 - 2026</p>
+                  <p className="text-sm text-indigo-600 dark:text-indigo-400 font-medium">University of Kelaniya • 2023 - 2026</p>
                   <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Specialized in software design, database optimizations, and system integrations.</p>
                 </div>
                 <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
