@@ -2,6 +2,7 @@
 
 import { motion, Variants } from 'framer-motion';
 import { skillCategories } from '../data';
+import TiltCard from './TiltCard';
 
 export default function Skills() {
   const containerVariants: Variants = {
@@ -45,7 +46,7 @@ export default function Skills() {
             whileInView={{ width: '80px' }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="h-[4px] rounded-full bg-gradient-to-r from-[#00f2fe] to-[#f355da]"
+            className="h-[4px] rounded-full bg-gradient-to-r from-brand-start to-brand-end"
           />
           <motion.p
             initial={{ opacity: 0 }}
@@ -70,34 +71,37 @@ export default function Skills() {
             <motion.div
               key={category.title}
               variants={cardVariants}
-              whileHover={{ y: -5 }}
-              className="glass hype-card p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 transition-all duration-300"
+              className="w-full"
             >
-              <h3 className="text-xl font-bold mb-6 text-slate-800 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-3">
-                {category.title}
-              </h3>
-              
-              <div className="space-y-6">
-                {category.skills.map((skill) => (
-                  <div key={skill.name} className="flex flex-col gap-2">
-                    <div className="flex items-center justify-between text-sm font-medium">
-                      <span className="text-slate-700 dark:text-slate-300">{skill.name}</span>
-                      <span className="text-[#00f2fe]">{skill.level}%</span>
-                    </div>
-                    {/* Progress Bar Track */}
-                    <div className="h-2 w-full rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
-                      {/* Active Progress Bar */}
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${skill.level}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1.2, ease: 'easeOut' }}
-                        className="h-full rounded-full bg-gradient-to-r from-[#00f2fe] via-[#4facfe] to-[#f355da]"
-                      />
-                    </div>
+              <TiltCard>
+                <div className="glass hype-card p-8 rounded-3xl border border-card-border transition-all duration-300 h-full">
+                  <h3 className="text-xl font-bold mb-6 text-slate-800 dark:text-white border-b border-card-border pb-3">
+                    {category.title}
+                  </h3>
+                  
+                  <div className="space-y-6">
+                    {category.skills.map((skill) => (
+                      <div key={skill.name} className="flex flex-col gap-2">
+                        <div className="flex items-center justify-between text-sm font-medium">
+                          <span className="text-slate-700 dark:text-slate-300">{skill.name}</span>
+                          <span className="text-accent-primary">{skill.level}%</span>
+                        </div>
+                        {/* Progress Bar Track */}
+                        <div className="h-2 w-full rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                          {/* Active Progress Bar */}
+                          <motion.div
+                            initial={{ width: 0 }}
+                            whileInView={{ width: `${skill.level}%` }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1.2, ease: 'easeOut' }}
+                            className="h-full rounded-full bg-gradient-to-r from-brand-start via-brand-mid to-brand-end"
+                          />
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </div>
+              </TiltCard>
             </motion.div>
           ))}
         </motion.div>

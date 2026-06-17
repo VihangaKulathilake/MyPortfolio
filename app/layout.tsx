@@ -6,6 +6,7 @@ import ScrollProgress from './components/ScrollProgress';
 import CustomCursor from './components/CustomCursor';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import GlobalSpotlight from './components/GlobalSpotlight';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -48,8 +49,11 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 hype-grid">
+      <body className="min-h-full flex flex-col transition-colors duration-300 hype-grid">
         <ThemeProvider>
+          {/* Global Ambient Mouse Spotlight */}
+          <GlobalSpotlight />
+
           {/* Top Page Progress Indicator */}
           <ScrollProgress />
           

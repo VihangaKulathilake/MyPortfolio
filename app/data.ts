@@ -66,42 +66,50 @@ export const skillCategories: SkillCategory[] = [
 export const timelineItems: TimelineItem[] = [
   {
     id: "edu-1",
-    year: "2023 - 2026",
+    year: "2023 - Present",
     title: "B.Sc. (Hons) in Software Engineering",
     subtitle: "University of Kelaniya",
-    description: "Specialized in software architecture, distributed systems, database management, and operating system design. Graduated with First Class Honors.",
+    description: "Specializing in software architecture, distributed systems, database management, and operating system design. Active participant in tech clubs and community projects.",
+    type: "education"
+  },
+  {
+    id: "edu-2",
+    year: "2009 - 2022",
+    title: "Primary & Secondary Education",
+    subtitle: "Ananda College, Colombo 10",
+    description: "Completed secondary education specializing in physical science (Mathematics stream) for G.C.E. Advanced Levels, participating in various technical and science associations.",
     type: "education"
   },
   {
     id: "exp-1",
     year: "2025 (6 Months)",
-    title: "Full Stack Developer Intern",
-    subtitle: "Apex Software Solutions",
-    description: "Contributed to building enterprise Spring Boot microservices and React web applications. Optimized database query speeds by 30% and introduced CI/CD pipelines.",
+    title: "Software Engineer Intern",
+    subtitle: "Fortude",
+    description: "Contributed to building enterprise-grade applications, implementing scalable REST APIs, optimizing database schemas, and participating in agile software delivery workflows.",
     type: "internship"
-  },
-  {
-    id: "cert-1",
-    year: "2025",
-    title: "AWS Certified Developer – Associate",
-    subtitle: "Amazon Web Services",
-    description: "Validated expertise in developing and maintaining AWS-based applications, core services (S3, EC2, Lambda, DynamoDB), and cloud security best practices.",
-    type: "certification"
   },
   {
     id: "ach-1",
     year: "2024",
-    title: "National Hackathon - Winner",
-    subtitle: "CodeSpark Hackathon",
-    description: "Led a team of four to build 'EcoRoute', an eco-friendly logistics optimization dashboard, winning the Grand Prize among 150+ teams.",
+    title: "JuniorHack 7.0 - 1st Runners Up",
+    subtitle: "Software Engineering Students' Association (SESA), University of Kelaniya",
+    description: "Placed 1st Runners Up in JuniorHack 7.0, designing and prototyping an innovative solution under strict time pressure, presenting it to a panel of industry experts.",
     type: "achievement"
   },
   {
     id: "ach-2",
     year: "2025",
-    title: "Technical Author on Medium",
-    subtitle: "Medium Publications",
-    description: "Authored technical articles detailing custom x86 operating system development (vjkOS) and explaining machine learning and deep learning fundamentals.",
+    title: "IEEEXtreme 19.0 - Participant",
+    subtitle: "IEEE",
+    description: "Competed in IEEEXtreme 19.0, a global 24-hour virtual competitive programming challenge, solving complex algorithmic and mathematical problems.",
+    type: "achievement"
+  },
+  {
+    id: "ach-3",
+    year: "2025",
+    title: "Creator of vjkOS & Technical Writer",
+    subtitle: "Hobbyist OS Development",
+    description: "Designed and built vjkOS, a custom x86 32-bit operating system kernel from scratch. Authored technical guides sharing insights on kernel design, memory descriptors, and low-level development.",
     type: "achievement"
   }
 ];
@@ -109,7 +117,7 @@ export const timelineItems: TimelineItem[] = [
 export const contactInfo: ContactInfo = {
   email: "vihangajanith12m@gmail.com",
   phone: "+94718519445",
-  location: "Colombo, Sri Lanka",
+  location: "Ganemulla, Sri Lanka",
   github: "https://github.com/VihangaKulathilake",
   linkedin: "https://linkedin.com/in/vihanga-kulathilake"
 };

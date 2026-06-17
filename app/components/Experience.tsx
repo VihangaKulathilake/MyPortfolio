@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { FiBookOpen, FiBriefcase, FiAward, FiCheck } from 'react-icons/fi';
 import { timelineItems, TimelineItem } from '../data';
+import TiltCard from './TiltCard';
 
 // Helper to render type icons
 const getTypeIcon = (type: TimelineItem['type']) => {
@@ -40,7 +41,7 @@ export default function Experience() {
   return (
     <section id="experience" className="py-24 relative overflow-hidden">
       {/* Background Glows */}
-      <div className="absolute top-1/2 left-0 glow-element bg-indigo-500/10 dark:bg-indigo-500/5 -translate-x-1/2" />
+      <div className="absolute top-1/2 left-0 glow-element bg-accent-primary/10 dark:bg-accent-primary/5 -translate-x-1/2" />
 
       <div className="mx-auto max-w-4xl px-6 md:px-8 relative z-10">
         
@@ -60,7 +61,7 @@ export default function Experience() {
             whileInView={{ width: '80px' }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="h-[4px] rounded-full bg-gradient-to-r from-[#00f2fe] to-[#f355da]"
+            className="h-[4px] rounded-full bg-gradient-to-r from-brand-start to-brand-end"
           />
           <motion.p
             initial={{ opacity: 0 }}
@@ -74,7 +75,7 @@ export default function Experience() {
         </div>
 
         {/* Timeline Layout */}
-        <div className="relative border-l border-slate-200 dark:border-[#00f2fe]/20 ml-4 md:ml-6 pl-8 md:pl-10 space-y-12">
+        <div className="relative border-l border-btn-sec-border dark:border-accent-primary/20 ml-4 md:ml-6 pl-8 md:pl-10 space-y-12">
           {timelineItems.map((item, index) => {
             return (
               <div key={item.id} className="relative">
@@ -97,29 +98,32 @@ export default function Experience() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: '-60px' }}
                   transition={{ type: 'spring', stiffness: 100, damping: 15, delay: 0.2 }}
-                  whileHover={{ scale: 1.01 }}
-                  className="glass hype-card p-6 sm:p-8 rounded-3xl shadow-xs border border-slate-100 dark:border-slate-800 transition-all duration-300"
+                  className="w-full"
                 >
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
-                    <div>
-                      <span className="text-xs font-bold font-mono px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 capitalize">
-                        {item.type}
-                      </span>
-                      <h3 className="text-xl font-bold text-slate-800 dark:text-white mt-2">
-                        {item.title}
-                      </h3>
-                      <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 mt-0.5">
-                        {item.subtitle}
+                  <TiltCard>
+                    <div className="glass hype-card p-6 sm:p-8 rounded-3xl border border-card-border transition-all duration-300 h-full">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                        <div>
+                          <span className="text-xs font-bold font-mono px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 capitalize">
+                            {item.type}
+                          </span>
+                          <h3 className="text-xl font-bold text-slate-800 dark:text-white mt-2">
+                            {item.title}
+                          </h3>
+                          <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 mt-0.5">
+                            {item.subtitle}
+                          </p>
+                        </div>
+                        <span className="text-sm font-semibold text-badge-text bg-badge-bg px-3 py-1.5 rounded-xl border border-badge-border self-start sm:self-center">
+                          {item.year}
+                        </span>
+                      </div>
+
+                      <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                        {item.description}
                       </p>
                     </div>
-                    <span className="text-sm font-semibold text-[#00f2fe] bg-[#00f2fe]/10 px-3 py-1.5 rounded-xl border border-[#00f2fe]/20 self-start sm:self-center">
-                      {item.year}
-                    </span>
-                  </div>
-
-                  <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                    {item.description}
-                  </p>
+                  </TiltCard>
                 </motion.div>
               </div>
             );

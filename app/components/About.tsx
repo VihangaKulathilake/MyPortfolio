@@ -3,6 +3,7 @@
 import { motion, Variants } from 'framer-motion';
 import { FiBriefcase, FiAward, FiBookOpen } from 'react-icons/fi';
 import Experience from './Experience';
+import TiltCard from './TiltCard';
 
 const stats = [
   { label: 'Projects Completed', value: '12+', icon: FiBriefcase, color: 'from-blue-500 to-indigo-500' },
@@ -29,7 +30,7 @@ export default function About() {
   };
 
   return (
-    <section id="about" className="py-24 relative overflow-hidden bg-slate-50/50 dark:bg-slate-900/10">
+    <section id="about" className="py-24 relative overflow-hidden bg-transparent">
       <div className="mx-auto max-w-7xl px-6 md:px-8 relative z-10">
         
         {/* Section Header */}
@@ -48,7 +49,7 @@ export default function About() {
             whileInView={{ width: '80px' }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="h-[4px] rounded-full bg-gradient-to-r from-[#00f2fe] to-[#f355da]"
+            className="h-[4px] rounded-full bg-gradient-to-r from-brand-start to-brand-end"
           />
         </div>
 
@@ -63,37 +64,45 @@ export default function About() {
             viewport={{ once: true }}
             className="lg:col-span-7 flex flex-col gap-6"
           >
-            <motion.div variants={itemVariants} className="glass hype-card p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800">
-              <h3 className="text-xl font-bold mb-4 text-slate-800 dark:text-white flex items-center gap-2">
-                Who I Am
-              </h3>
-              <p className="text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
-                Hello! I&apos;m Vihanga, a Software Engineering honors student and full-stack developer with a drive to create elegant, scalable, and responsive applications. My software engineering journey is built on a passion for continuous learning and architectural excellence.
-              </p>
-              <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                I enjoy bridging the gap between back-end robustness and front-end interactivity. Using technologies like Next.js, Spring Boot, and Docker, I aim to construct clean architectures that guarantee top-tier user experiences.
-              </p>
-            </motion.div>
-
-            <motion.div variants={itemVariants} className="glass hype-card p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800">
-              <h3 className="text-xl font-bold mb-4 text-slate-800 dark:text-white">
-                Education & Goals
-              </h3>
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-semibold text-slate-800 dark:text-white">
-                    B.Sc. (Hons) in Software Engineering
-                  </h4>
-                  <p className="text-sm text-indigo-600 dark:text-indigo-400 font-medium">University of Kelaniya • 2023 - 2026</p>
-                  <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Specialized in software design, database optimizations, and system integrations.</p>
-                </div>
-                <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
-                  <h4 className="font-semibold text-slate-800 dark:text-white">Career Vision</h4>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
-                    To work in highly collaborative product environments, architecting SaaS solutions that address real-world business challenges. I aspire to deepen my expertise in cloud-native infrastructure, system scaling, and AI integrations.
+            <motion.div variants={itemVariants}>
+              <TiltCard>
+                <div className="glass hype-card p-8 rounded-3xl border border-card-border h-full">
+                  <h3 className="text-xl font-bold mb-4 text-slate-800 dark:text-white flex items-center gap-2">
+                    Who I Am
+                  </h3>
+                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+                    Hello! I&apos;m Vihanga, a Software Engineering honors student and full-stack developer with a drive to create elegant, scalable, and responsive applications. My software engineering journey is built on a passion for continuous learning and architectural excellence.
+                  </p>
+                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                    I enjoy bridging the gap between back-end robustness and front-end interactivity. Using technologies like Next.js, Spring Boot, and Docker, I aim to construct clean architectures that guarantee top-tier user experiences.
                   </p>
                 </div>
-              </div>
+              </TiltCard>
+            </motion.div>
+
+            <motion.div variants={itemVariants}>
+              <TiltCard>
+                <div className="glass hype-card p-8 rounded-3xl border border-card-border h-full">
+                  <h3 className="text-xl font-bold mb-4 text-slate-800 dark:text-white">
+                    Education & Goals
+                  </h3>
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="font-semibold text-slate-800 dark:text-white">
+                        B.Sc. (Hons) in Software Engineering
+                      </h4>
+                      <p className="text-sm text-indigo-600 dark:text-indigo-400 font-medium">University of Kelaniya • 2023 - 2026</p>
+                      <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Specialized in software design, database optimizations, and system integrations.</p>
+                    </div>
+                    <div className="pt-2 border-t border-card-border">
+                      <h4 className="font-semibold text-slate-800 dark:text-white">Career Vision</h4>
+                      <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                        To work in highly collaborative product environments, architecting SaaS solutions that address real-world business challenges. I aspire to deepen my expertise in cloud-native infrastructure, system scaling, and AI integrations.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </TiltCard>
             </motion.div>
           </motion.div>
 
@@ -108,20 +117,23 @@ export default function About() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ type: 'spring', stiffness: 80, damping: 15, delay: index * 0.1 }}
-                  whileHover={{ y: -5, scale: 1.02 }}
-                  className="glass hype-card flex items-center p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 transition-all duration-300"
+                  className="w-full"
                 >
-                  <div className={`p-4 rounded-2xl bg-gradient-to-br ${stat.color} text-white mr-6 shadow-md`}>
-                    <Icon className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <span className="block text-3xl font-black tracking-tight text-slate-800 dark:text-white">
-                      {stat.value}
-                    </span>
-                    <span className="block text-sm font-medium text-slate-500 dark:text-slate-400 mt-0.5">
-                      {stat.label}
-                    </span>
-                  </div>
+                  <TiltCard>
+                    <div className="glass hype-card flex items-center p-6 rounded-3xl border border-card-border h-full w-full">
+                      <div className={`p-4 rounded-2xl bg-gradient-to-br ${stat.color} text-white mr-6 shadow-md`}>
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <span className="block text-3xl font-black tracking-tight text-slate-800 dark:text-white">
+                          {stat.value}
+                        </span>
+                        <span className="block text-sm font-medium text-slate-500 dark:text-slate-400 mt-0.5">
+                          {stat.label}
+                        </span>
+                      </div>
+                    </div>
+                  </TiltCard>
                 </motion.div>
               );
             })}
@@ -130,7 +142,7 @@ export default function About() {
         </div>
 
         {/* Experience Timeline Integration */}
-        <div className="mt-24 pt-16 border-t border-slate-100 dark:border-slate-800/60">
+        <div className="mt-24 pt-16 border-t border-card-border">
           <Experience />
         </div>
 

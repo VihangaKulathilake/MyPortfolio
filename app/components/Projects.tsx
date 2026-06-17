@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FiGithub, FiExternalLink, FiX, FiFolder, FiStar, FiGitBranch, FiInfo } from 'react-icons/fi';
 import { projects, Project } from '../projects';
 import { useGithubRepos } from '../hooks/useGithubRepos';
+import TiltCard from './TiltCard';
+import Magnetic from './Magnetic';
 
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -29,7 +31,7 @@ export default function Projects() {
   };
 
   return (
-    <section id="projects" className="py-24 relative overflow-hidden bg-slate-50/50 dark:bg-slate-900/10">
+    <section id="projects" className="py-24 relative overflow-hidden bg-transparent">
       <div className="mx-auto max-w-7xl px-6 md:px-8 relative z-10">
         
         {/* ================= FEATURED PROJECTS SECTION ================= */}
@@ -48,7 +50,7 @@ export default function Projects() {
             whileInView={{ width: '80px' }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="h-[4px] rounded-full bg-gradient-to-r from-[#00f2fe] to-[#f355da]"
+            className="h-[4px] rounded-full bg-gradient-to-r from-brand-start to-brand-end"
           />
           <motion.p
             initial={{ opacity: 0 }}
@@ -73,95 +75,105 @@ export default function Projects() {
                 viewport={{ once: true, margin: '-100px' }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 key={project.id}
-                onClick={() => handleCardClick(githubDetails.url)}
-                className="glass hype-card rounded-3xl overflow-hidden shadow-xl border border-slate-100 dark:border-slate-800 flex flex-col lg:flex-row h-full cursor-pointer group"
+                className="w-full h-full"
               >
-                {/* Image Section */}
-                {project.image && (
-                  <div className="relative h-64 lg:h-auto lg:w-1/2 min-h-[300px] bg-slate-100 dark:bg-slate-900 overflow-hidden border-b lg:border-b-0 lg:border-r border-slate-100 dark:border-slate-800">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      priority={index === 0}
-                      className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
-                    />
-                    <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/40 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                      <span className="px-4 py-2 rounded-xl bg-white/90 dark:bg-slate-900/90 text-sm font-semibold text-slate-800 dark:text-white shadow-lg backdrop-blur-xs flex items-center gap-2">
-                        <FiGithub className="w-4 h-4" />
-                        View Repository
-                      </span>
-                    </div>
-                  </div>
-                )}
-
-                {/* Details Section */}
-                <div className={`p-8 flex flex-col justify-between gap-6 ${project.image ? 'lg:w-1/2' : 'w-full'}`}>
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-2xl font-black text-slate-800 dark:text-white group-hover:text-[#00f2fe] transition-colors duration-300">
-                        {project.title}
-                      </h3>
-                      
-                      {/* GitHub Details indicator (stars) */}
-                      {githubDetails.stars !== undefined && (
-                        <div className="flex items-center gap-1 text-amber-500 font-mono text-sm font-semibold">
-                          <FiStar className="w-4 h-4 fill-amber-500" />
-                          <span>{githubDetails.stars}</span>
-                        </div>
-                      )}
-                    </div>
-
-                    <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6">
-                      {project.description}
-                    </p>
-
-                    {/* Tech Badges */}
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs font-semibold text-slate-600 dark:text-[#00f2fe]"
-                        >
-                          {tag}
+                <TiltCard
+                  onClick={() => handleCardClick(githubDetails.url)}
+                  className="glass hype-card rounded-3xl overflow-hidden shadow-xl border border-card-border flex flex-col lg:flex-row h-full cursor-pointer group"
+                >
+                  {/* Image Section */}
+                  {project.image && (
+                    <div className="relative h-64 lg:h-auto lg:w-1/2 min-h-[300px] bg-slate-100 dark:bg-slate-900 overflow-hidden border-b lg:border-b-0 lg:border-r border-card-border">
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        priority={index === 0}
+                        className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
+                      />
+                      <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/40 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                        <span className="px-4 py-2 rounded-xl bg-white/90 dark:bg-slate-900/90 text-sm font-semibold text-slate-800 dark:text-white shadow-lg backdrop-blur-xs flex items-center gap-2">
+                          <FiGithub className="w-4 h-4" />
+                          View Repository
                         </span>
-                      ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Details Section */}
+                  <div className={`p-8 flex flex-col justify-between gap-6 ${project.image ? 'lg:w-1/2' : 'w-full'}`}>
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-2xl font-black text-slate-800 dark:text-white group-hover:text-accent-primary transition-colors duration-300">
+                          {project.title}
+                        </h3>
+                        
+                        {/* GitHub Details indicator (stars) */}
+                        {githubDetails.stars !== undefined && (
+                          <div className="flex items-center gap-1 text-amber-500 font-mono text-sm font-semibold">
+                            <FiStar className="w-4 h-4 fill-amber-500" />
+                            <span>{githubDetails.stars}</span>
+                          </div>
+                        )}
+                      </div>
+
+                      <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6">
+                        {project.description}
+                      </p>
+
+                      {/* Tech Badges */}
+                      <div className="flex flex-wrap gap-2">
+                        {project.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-3 py-1.5 rounded-lg bg-badge-bg text-xs font-semibold text-badge-text border border-badge-border"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Actions footer */}
+                    <div className="flex flex-wrap items-center gap-4 pt-6 border-t border-card-border">
+                      <Magnetic>
+                        <a
+                          href={githubDetails.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="flex items-center justify-center gap-2 h-11 px-5 rounded-xl bg-slate-950 hover:bg-slate-800 text-white dark:bg-slate-800 dark:hover:bg-slate-700 font-semibold text-sm transition-all duration-300"
+                        >
+                          <FiGithub className="w-4 h-4" />
+                          GitHub Repo
+                        </a>
+                      </Magnetic>
+                      {project.liveUrl && (
+                        <Magnetic>
+                          <a
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="flex items-center justify-center gap-2 h-11 px-5 rounded-xl bg-gradient-to-r from-brand-start via-brand-mid to-brand-end hover:opacity-95 text-white dark:text-slate-950 font-bold text-sm transition-all duration-300 shadow-md shadow-accent-primary/10"
+                          >
+                            <FiExternalLink className="w-4 h-4" />
+                            Live Demo
+                          </a>
+                        </Magnetic>
+                      )}
+                      <Magnetic className="ml-auto">
+                        <button
+                          onClick={(e) => openModal(e, project)}
+                          className="flex items-center justify-center gap-2 h-11 px-4 rounded-xl border border-btn-sec-border bg-btn-sec text-slate-600 dark:text-slate-400 hover:border-accent-primary hover:text-accent-primary transition-all duration-300 cursor-pointer"
+                          title="Read Details"
+                        >
+                          <FiInfo className="w-4.5 h-4.5" />
+                        </button>
+                      </Magnetic>
                     </div>
                   </div>
-
-                  {/* Actions footer */}
-                  <div className="flex flex-wrap items-center gap-4 pt-6 border-t border-slate-100 dark:border-slate-800">
-                    <a
-                      href={githubDetails.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      className="flex items-center justify-center gap-2 h-11 px-5 rounded-xl bg-slate-950 hover:bg-slate-800 text-white dark:bg-slate-800 dark:hover:bg-slate-700 font-semibold text-sm transition-all duration-300"
-                    >
-                      <FiGithub className="w-4 h-4" />
-                      GitHub Repo
-                    </a>
-                    {project.liveUrl && (
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="flex items-center justify-center gap-2 h-11 px-5 rounded-xl bg-gradient-to-r from-[#00f2fe] via-[#4facfe] to-[#f355da] hover:opacity-95 text-slate-950 font-bold text-sm transition-all duration-300 shadow-md"
-                      >
-                        <FiExternalLink className="w-4 h-4" />
-                        Live Demo
-                      </a>
-                    )}
-                    <button
-                      onClick={(e) => openModal(e, project)}
-                      className="flex items-center justify-center gap-2 h-11 px-4 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-indigo-500 hover:text-indigo-500 transition-all duration-300 cursor-pointer ml-auto"
-                      title="Read Details"
-                    >
-                      <FiInfo className="w-4.5 h-4.5" />
-                    </button>
-                  </div>
-                </div>
+                </TiltCard>
               </motion.div>
             );
           })}
@@ -184,7 +196,7 @@ export default function Projects() {
             whileInView={{ width: '80px' }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="h-[4px] rounded-full bg-gradient-to-r from-[#00f2fe] to-[#f355da]"
+            className="h-[4px] rounded-full bg-gradient-to-r from-brand-start to-brand-end"
           />
           <motion.p
             initial={{ opacity: 0 }}
@@ -209,49 +221,53 @@ export default function Projects() {
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 key={project.id}
-                onClick={() => handleCardClick(githubDetails.url)}
-                className="glass hype-card p-6 rounded-3xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between gap-4 cursor-pointer group"
+                className="w-full"
               >
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="p-3 rounded-2xl bg-indigo-500/10 dark:bg-indigo-500/20 text-[#00f2fe] group-hover:scale-110 transition-transform duration-300">
-                      <FiFolder className="w-5 h-5" />
-                    </div>
-                    
-                    {/* Stars indicator if available */}
-                    {githubDetails.stars !== undefined && (
-                      <div className="flex items-center gap-1 text-slate-400 font-mono text-xs">
-                        <FiStar className="w-3.5 h-3.5 fill-slate-400" />
-                        <span>{githubDetails.stars}</span>
+                <TiltCard
+                  onClick={() => handleCardClick(githubDetails.url)}
+                  className="glass hype-card p-6 rounded-3xl border border-card-border flex flex-col justify-between gap-4 cursor-pointer group h-full"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="p-3 rounded-2xl bg-badge-bg text-accent-primary border border-badge-border group-hover:scale-110 transition-transform duration-300">
+                        <FiFolder className="w-5 h-5" />
                       </div>
-                    )}
+                      
+                      {/* Stars indicator if available */}
+                      {githubDetails.stars !== undefined && (
+                        <div className="flex items-center gap-1 text-slate-400 font-mono text-xs">
+                          <FiStar className="w-3.5 h-3.5 fill-slate-400" />
+                          <span>{githubDetails.stars}</span>
+                        </div>
+                      )}
+                    </div>
+
+                    <h3 className="text-lg font-bold text-slate-800 dark:text-white group-hover:text-accent-primary transition-colors duration-300">
+                      {project.title}
+                    </h3>
+                    <p className="text-slate-500 dark:text-slate-400 text-xs mt-2 line-clamp-2 leading-relaxed">
+                      {project.description}
+                    </p>
                   </div>
 
-                  <h3 className="text-lg font-bold text-slate-800 dark:text-white group-hover:text-[#00f2fe] transition-colors duration-300">
-                    {project.title}
-                  </h3>
-                  <p className="text-slate-500 dark:text-slate-400 text-xs mt-2 line-clamp-2 leading-relaxed">
-                    {project.description}
-                  </p>
-                </div>
+                  <div className="pt-4 border-t border-card-border flex items-center justify-between">
+                    <div className="flex flex-wrap gap-1.5 max-w-[70%]">
+                      {project.tags.slice(0, 3).map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2 py-0.5 rounded-md bg-badge-bg text-[10px] font-semibold text-badge-text border border-badge-border"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
 
-                <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                  <div className="flex flex-wrap gap-1.5 max-w-[70%]">
-                    {project.tags.slice(0, 3).map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-[10px] font-semibold text-slate-500 dark:text-slate-400"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                    <span className="text-xs font-semibold text-accent-primary flex items-center gap-1 group-hover:underline">
+                      Repo Link
+                      <FiExternalLink className="w-3.5 h-3.5" />
+                    </span>
                   </div>
-
-                  <span className="text-xs font-semibold text-indigo-500 dark:text-[#00f2fe] flex items-center gap-1 group-hover:underline">
-                    Repo Link
-                    <FiExternalLink className="w-3.5 h-3.5" />
-                  </span>
-                </div>
+                </TiltCard>
               </motion.div>
             );
           })}
@@ -277,22 +293,24 @@ export default function Projects() {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: 20 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-                className="relative bg-white dark:bg-slate-900 max-w-3xl w-full rounded-3xl shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-800 z-10 max-h-[90vh] flex flex-col"
+                className="relative bg-white dark:bg-slate-900 max-w-3xl w-full rounded-3xl shadow-2xl overflow-hidden border border-card-border z-10 max-h-[90vh] flex flex-col"
               >
                 {/* Header Close Button */}
-                <button
-                  onClick={() => setSelectedProject(null)}
-                  className="absolute top-4 right-4 z-20 p-2 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:text-[#00f2fe] transition-colors duration-300 shadow-md cursor-pointer"
-                  aria-label="Close modal"
-                >
-                  <FiX className="w-5 h-5" />
-                </button>
+                <Magnetic className="absolute top-4 right-4 z-20">
+                  <button
+                    onClick={() => setSelectedProject(null)}
+                    className="p-2 rounded-xl bg-btn-sec border border-btn-sec-border text-btn-sec-text hover:text-accent-primary transition-colors duration-300 shadow-md cursor-pointer"
+                    aria-label="Close modal"
+                  >
+                    <FiX className="w-5 h-5" />
+                  </button>
+                </Magnetic>
 
                 {/* Modal Scroll Area */}
                 <div className="overflow-y-auto flex-1">
                   {/* Banner Image */}
                   {selectedProject.image && (
-                    <div className="relative h-64 sm:h-80 w-full bg-slate-100 dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800">
+                    <div className="relative h-64 sm:h-80 w-full bg-slate-100 dark:bg-slate-900 border-b border-card-border">
                       <Image
                         src={selectedProject.image}
                         alt={selectedProject.title}
@@ -312,7 +330,7 @@ export default function Projects() {
                         {selectedProject.tags.map((tag) => (
                           <span
                             key={tag}
-                            className="px-2.5 py-1 rounded-md bg-[#00f2fe]/10 dark:bg-[#00f2fe]/10 text-[#00f2fe] border border-[#00f2fe]/20"
+                            className="px-2.5 py-1 rounded-md bg-badge-bg text-badge-text border border-badge-border"
                           >
                             {tag}
                           </span>
@@ -328,26 +346,30 @@ export default function Projects() {
                     </div>
 
                     {/* Action Links */}
-                    <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t border-slate-100 dark:border-slate-800">
-                      <a
-                        href={getRepoDetails(selectedProject.owner, selectedProject.repoName, selectedProject.githubUrl).url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 h-11 px-5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white dark:bg-slate-800 dark:hover:bg-slate-700 font-semibold text-sm transition-all duration-300 shadow-sm"
-                      >
-                        <FiGithub className="w-4 h-4" />
-                        Source Code
-                      </a>
-                      {selectedProject.liveUrl && (
+                    <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t border-card-border">
+                      <Magnetic>
                         <a
-                          href={selectedProject.liveUrl}
+                          href={getRepoDetails(selectedProject.owner, selectedProject.repoName, selectedProject.githubUrl).url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center justify-center gap-2 h-11 px-5 rounded-xl bg-gradient-to-r from-[#00f2fe] via-[#4facfe] to-[#f355da] hover:opacity-95 text-slate-950 font-bold text-sm transition-all duration-300 shadow-lg shadow-[#00f2fe]/10"
+                          className="flex items-center justify-center gap-2 h-11 px-5 rounded-xl bg-slate-950 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white font-semibold text-sm transition-all duration-300 shadow-sm"
                         >
-                          <FiExternalLink className="w-4 h-4" />
-                          Live Demo
+                          <FiGithub className="w-4 h-4" />
+                          Source Code
                         </a>
+                      </Magnetic>
+                      {selectedProject.liveUrl && (
+                        <Magnetic>
+                          <a
+                            href={selectedProject.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center gap-2 h-11 px-5 rounded-xl bg-gradient-to-r from-brand-start via-brand-mid to-brand-end hover:opacity-95 text-white dark:text-slate-950 font-bold text-sm transition-all duration-300 shadow-lg shadow-accent-primary/10"
+                          >
+                            <FiExternalLink className="w-4 h-4" />
+                            Live Demo
+                          </a>
+                        </Magnetic>
                       )}
                     </div>
                   </div>

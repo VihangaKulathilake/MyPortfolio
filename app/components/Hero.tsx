@@ -7,6 +7,8 @@ import { FiGithub, FiLinkedin, FiMail, FiArrowRight } from 'react-icons/fi';
 import { SiReact, SiNextdotjs, SiSpringboot, SiNodedotjs, SiPhp } from 'react-icons/si';
 import { FaJava } from 'react-icons/fa';
 import { contactInfo } from '../data';
+import Magnetic from './Magnetic';
+
 
 const roles = [
   'Full Stack Developer',
@@ -19,17 +21,6 @@ export default function Hero() {
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [currentText, setCurrentText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
-
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setMousePosition({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-  };
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -89,21 +80,8 @@ export default function Hero() {
   return (
     <section
       id="home"
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       className="relative min-h-[92vh] flex items-center lg:items-end justify-center pt-20 pb-0 overflow-hidden select-none"
     >
-      {/* Cinematic Mouse Tracking Spotlight */}
-      <div
-        className="pointer-events-none absolute inset-0 transition-opacity duration-500 z-0"
-        style={{
-          background: isHovered
-            ? `radial-gradient(800px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(0, 242, 254, 0.14), rgba(243, 85, 218, 0.07) 35%, transparent 70%)`
-            : `radial-gradient(800px circle at 50% 50%, rgba(0, 242, 254, 0.08), rgba(243, 85, 218, 0.04) 35%, transparent 70%)`,
-        }}
-      />
-
       {/* Grid Backdrop with fade mask */}
       <div className="absolute inset-0 hype-grid opacity-20 dark:opacity-35 grid-mask pointer-events-none z-0" />
 
@@ -120,16 +98,18 @@ export default function Hero() {
           className="lg:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-left gap-6 animate-fade-in lg:self-center lg:py-16"
         >
           {/* Badge */}
-          <motion.div
-            variants={childVariants}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#00f2fe]/30 bg-[#00f2fe]/5 text-[#00f2fe] dark:text-[#00f2fe] font-mono text-xs font-bold uppercase tracking-wider shadow-sm shadow-[#00f2fe]/10 backdrop-blur-xs"
-          >
-            <span className="flex h-2.5 w-2.5 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00f2fe]/60 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#00f2fe]"></span>
-            </span>
-            Available for Opportunities
-          </motion.div>
+          <Magnetic>
+            <motion.div
+              variants={childVariants}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-badge-border bg-badge-bg text-badge-text font-mono text-xs font-bold uppercase tracking-wider shadow-xs shadow-accent-primary/5 backdrop-blur-xs"
+            >
+              <span className="flex h-2.5 w-2.5 relative">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-primary/60 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent-primary"></span>
+              </span>
+              Available for Opportunities
+            </motion.div>
+          </Magnetic>
 
           {/* Title */}
           <div className="flex flex-col gap-3">
@@ -138,7 +118,7 @@ export default function Hero() {
               className="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight cinematic-glow leading-none text-slate-900 dark:text-white"
             >
               Hi, I&apos;m{' '}
-              <span className="bg-gradient-to-r from-[#00f2fe] via-[#4facfe] to-[#f355da] bg-clip-text text-transparent hover:brightness-110 transition-all duration-300">
+              <span className="bg-gradient-to-r from-brand-start via-brand-mid to-brand-end bg-clip-text text-transparent hover:brightness-110 transition-all duration-300">
                 Vihanga
               </span>
             </motion.h1>
@@ -148,7 +128,7 @@ export default function Hero() {
               className="text-2xl sm:text-3xl font-bold text-slate-700 dark:text-slate-200 h-[40px] flex items-center justify-center lg:justify-start font-mono"
             >
               <span className="text-slate-900 dark:text-white">{currentText}</span>
-              <span className="animate-pulse ml-1 inline-block h-6 w-[2px] bg-[#00f2fe]" />
+              <span className="animate-pulse ml-1 inline-block h-6 w-[2px] bg-accent-primary" />
             </motion.h2>
           </div>
 
@@ -165,19 +145,23 @@ export default function Hero() {
             variants={childVariants}
             className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
           >
-            <a
-              href="#projects"
-              className="flex items-center justify-center gap-2 h-12 px-8 rounded-xl bg-gradient-to-r from-[#00f2fe] via-[#4facfe] to-[#f355da] hover:brightness-110 text-slate-950 font-black transition-all duration-300 shadow-md shadow-[#00f2fe]/15 hover:shadow-[0_0_30px_rgba(0,242,254,0.5)] hover:-translate-y-1 hover:scale-[1.02] active:scale-[0.98] group cursor-pointer"
-            >
-              View My Work
-              <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-            </a>
-            <a
-              href="#contact"
-              className="flex items-center justify-center h-12 px-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/40 dark:bg-slate-900/40 backdrop-blur-xs hover:bg-slate-50 dark:hover:bg-slate-900 font-bold text-slate-800 dark:text-white transition-all duration-300 hover:border-[#f355da]/60 dark:hover:border-[#f355da]/60 hover:shadow-[0_0_20px_rgba(243,85,218,0.2)] hover:-translate-y-1 hover:scale-[1.02] active:scale-[0.98] cursor-pointer shadow-xs"
-            >
-              Contact Me
-            </a>
+            <Magnetic>
+              <a
+                href="#projects"
+                className="flex items-center justify-center gap-2 h-12 px-8 rounded-xl bg-gradient-to-r from-brand-start via-brand-mid to-brand-end hover:brightness-110 text-white dark:text-slate-950 font-black transition-all duration-300 shadow-md shadow-accent-primary/15 hover:shadow-indigo-500/25 dark:hover:shadow-[#00f2fe]/40 hover:-translate-y-1 hover:scale-[1.02] active:scale-[0.98] group cursor-pointer"
+              >
+                View My Work
+                <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+              </a>
+            </Magnetic>
+            <Magnetic>
+              <a
+                href="#contact"
+                className="flex items-center justify-center h-12 px-6 rounded-xl border border-btn-sec-border bg-btn-sec backdrop-blur-xs hover:bg-slate-100/50 dark:hover:bg-slate-800/50 font-bold text-slate-800 dark:text-white transition-all duration-300 hover:border-accent-pink/60 hover:shadow-[0_0_20px_rgba(217,70,239,0.15)] dark:hover:shadow-[0_0_20px_rgba(243,85,218,0.2)] hover:-translate-y-1 hover:scale-[1.02] active:scale-[0.98] cursor-pointer shadow-xs"
+              >
+                Contact Me
+              </a>
+            </Magnetic>
           </motion.div>
 
           {/* Social Shortcut Links */}
@@ -186,69 +170,77 @@ export default function Hero() {
             className="flex flex-wrap items-center gap-6 mt-2 w-full"
           >
             <div className="flex items-center gap-4">
-              <a
-                href={contactInfo.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/40 dark:bg-slate-900/40 backdrop-blur-xs hover:border-[#00f2fe] dark:hover:border-[#00f2fe] hover:text-[#00f2fe] dark:hover:text-[#00f2fe] text-slate-600 dark:text-slate-400 transition-all duration-300 hover:-translate-y-1 hover:scale-115 hover:rotate-3 hover:shadow-[0_0_15px_rgba(0,242,254,0.25)] cursor-pointer"
-                aria-label="GitHub"
-              >
-                <FiGithub className="w-5 h-5" />
-              </a>
-              <a
-                href={contactInfo.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/40 dark:bg-slate-900/40 backdrop-blur-xs hover:border-[#00f2fe] dark:hover:border-[#00f2fe] hover:text-[#00f2fe] dark:hover:text-[#00f2fe] text-slate-600 dark:text-slate-400 transition-all duration-300 hover:-translate-y-1 hover:scale-115 hover:rotate-3 hover:shadow-[0_0_15px_rgba(0,242,254,0.25)] cursor-pointer"
-                aria-label="LinkedIn"
-              >
-                <FiLinkedin className="w-5 h-5" />
-              </a>
-              <a
-                href={`mailto:${contactInfo.email}`}
-                className="p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/40 dark:bg-slate-900/40 backdrop-blur-xs hover:border-[#00f2fe] dark:hover:border-[#00f2fe] hover:text-[#00f2fe] dark:hover:text-[#00f2fe] text-slate-600 dark:text-slate-400 transition-all duration-300 hover:-translate-y-1 hover:scale-115 hover:rotate-3 hover:shadow-[0_0_15px_rgba(0,242,254,0.25)] cursor-pointer"
-                aria-label="Email"
-              >
-                <FiMail className="w-5 h-5" />
-              </a>
+              <Magnetic>
+                <a
+                  href={contactInfo.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 rounded-xl border border-btn-sec-border bg-btn-sec backdrop-blur-xs hover:border-accent-primary hover:text-accent-primary text-slate-600 dark:text-slate-400 transition-all duration-300 hover:-translate-y-1 hover:scale-115 hover:rotate-3 hover:shadow-xs hover:shadow-accent-primary/20 cursor-pointer"
+                  aria-label="GitHub"
+                >
+                  <FiGithub className="w-5 h-5" />
+                </a>
+              </Magnetic>
+              <Magnetic>
+                <a
+                  href={contactInfo.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 rounded-xl border border-btn-sec-border bg-btn-sec backdrop-blur-xs hover:border-accent-primary hover:text-accent-primary text-slate-600 dark:text-slate-400 transition-all duration-300 hover:-translate-y-1 hover:scale-115 hover:rotate-3 hover:shadow-xs hover:shadow-accent-primary/20 cursor-pointer"
+                  aria-label="LinkedIn"
+                >
+                  <FiLinkedin className="w-5 h-5" />
+                </a>
+              </Magnetic>
+              <Magnetic>
+                <a
+                  href={`mailto:${contactInfo.email}`}
+                  className="p-3 rounded-xl border border-btn-sec-border bg-btn-sec backdrop-blur-xs hover:border-accent-primary hover:text-accent-primary text-slate-600 dark:text-slate-400 transition-all duration-300 hover:-translate-y-1 hover:scale-115 hover:rotate-3 hover:shadow-xs hover:shadow-accent-primary/20 cursor-pointer"
+                  aria-label="Email"
+                >
+                  <FiMail className="w-5 h-5" />
+                </a>
+              </Magnetic>
             </div>
 
-            <div className="h-4 w-[1px] bg-slate-200 dark:bg-slate-800 hidden sm:block" />
+            <div className="h-4 w-[1px] bg-btn-sec-border hidden sm:block" />
 
-            <a
-              href="/resume.pdf"
-              download
-              className="flex items-center gap-1.5 text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-[#00f2fe] dark:hover:text-[#00f2fe] transition-colors duration-300 border-b border-dashed border-slate-400 dark:border-slate-600 hover:border-[#00f2fe] pb-0.5"
-            >
-              Download Resume
-            </a>
+            <Magnetic>
+              <a
+                href="/resume.pdf"
+                download
+                className="flex items-center gap-1.5 text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-accent-primary dark:hover:text-accent-primary transition-colors duration-300 border-b border-dashed border-slate-400 dark:border-slate-600 hover:border-accent-primary pb-0.5"
+              >
+                Download Resume
+              </a>
+            </Magnetic>
           </motion.div>
 
           {/* Tech Stack Row */}
           <motion.div
             variants={childVariants}
-            className="flex flex-wrap items-center gap-3 mt-6 pt-6 border-t border-slate-200/50 dark:border-slate-800/50 w-full"
+            className="flex flex-wrap items-center gap-3 mt-6 pt-6 border-t border-btn-sec-border w-full"
           >
             <span className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 font-mono">
               Tech Stack |
             </span>
             <div className="flex flex-wrap items-center gap-2.5">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-805 bg-slate-100/50 dark:bg-slate-900/30 text-xs font-bold text-slate-700 dark:text-slate-300 transition-all duration-300 hover:scale-105 hover:border-[#61DAFB] hover:bg-[#61DAFB]/5 hover:text-[#61DAFB] hover:shadow-[0_0_15px_rgba(97,218,251,0.25)]">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-btn-sec-border bg-btn-sec text-xs font-bold text-slate-700 dark:text-slate-300 transition-all duration-300 hover:scale-105 hover:border-[#61DAFB] hover:bg-[#61DAFB]/5 hover:text-[#61DAFB] hover:shadow-[0_0_15px_rgba(97,218,251,0.25)]">
                 <SiReact className="w-4 h-4 text-[#61DAFB] animate-[spin_12s_linear_infinite]" /> React
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-805 bg-slate-100/50 dark:bg-slate-900/30 text-xs font-bold text-slate-700 dark:text-slate-300 transition-all duration-300 hover:scale-105 hover:border-slate-900 dark:hover:border-white hover:bg-slate-900/5 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white hover:shadow-[0_0_15px_rgba(255,255,255,0.15)]">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-btn-sec-border bg-btn-sec text-xs font-bold text-slate-700 dark:text-slate-300 transition-all duration-300 hover:scale-105 hover:border-slate-900 dark:hover:border-white hover:bg-slate-900/5 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white hover:shadow-[0_0_15px_rgba(255,255,255,0.15)]">
                 <SiNextdotjs className="w-4 h-4 text-slate-950 dark:text-white" /> Next.js
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-805 bg-slate-100/50 dark:bg-slate-900/30 text-xs font-bold text-slate-700 dark:text-slate-300 transition-all duration-300 hover:scale-105 hover:border-[#6DB33F] hover:bg-[#6DB33F]/5 hover:text-[#6DB33F] hover:shadow-[0_0_15px_rgba(109,179,63,0.25)]">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-btn-sec-border bg-btn-sec text-xs font-bold text-slate-700 dark:text-slate-300 transition-all duration-300 hover:scale-105 hover:border-[#6DB33F] hover:bg-[#6DB33F]/5 hover:text-[#6DB33F] hover:shadow-[0_0_15px_rgba(109,179,63,0.25)]">
                 <SiSpringboot className="w-4 h-4 text-[#6DB33F]" /> Spring Boot
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-805 bg-slate-100/50 dark:bg-slate-900/30 text-xs font-bold text-slate-700 dark:text-slate-300 transition-all duration-300 hover:scale-105 hover:border-[#68A063] hover:bg-[#68A063]/5 hover:text-[#68A063] hover:shadow-[0_0_15px_rgba(104,160,99,0.25)]">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-btn-sec-border bg-btn-sec text-xs font-bold text-slate-700 dark:text-slate-300 transition-all duration-300 hover:scale-105 hover:border-[#68A063] hover:bg-[#68A063]/5 hover:text-[#68A063] hover:shadow-[0_0_15px_rgba(104,160,99,0.25)]">
                 <SiNodedotjs className="w-4 h-4 text-[#68A063]" /> Node.js
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-805 bg-slate-100/50 dark:bg-slate-900/30 text-xs font-bold text-slate-700 dark:text-slate-300 transition-all duration-300 hover:scale-105 hover:border-[#777BB4] hover:bg-[#777BB4]/5 hover:text-[#777BB4] hover:shadow-[0_0_15px_rgba(119,123,180,0.25)]">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-btn-sec-border bg-btn-sec text-xs font-bold text-slate-700 dark:text-slate-300 transition-all duration-300 hover:scale-105 hover:border-[#777BB4] hover:bg-[#777BB4]/5 hover:text-[#777BB4] hover:shadow-[0_0_15px_rgba(119,123,180,0.25)]">
                 <SiPhp className="w-4 h-4 text-[#777BB4]" /> PHP
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-805 bg-slate-100/50 dark:bg-slate-900/30 text-xs font-bold text-slate-700 dark:text-slate-300 transition-all duration-300 hover:scale-105 hover:border-[#007396] hover:bg-[#007396]/5 hover:text-[#007396] hover:shadow-[0_0_15px_rgba(0,115,150,0.25)]">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-btn-sec-border bg-btn-sec text-xs font-bold text-slate-700 dark:text-slate-300 transition-all duration-300 hover:scale-105 hover:border-[#007396] hover:bg-[#007396]/5 hover:text-[#007396] hover:shadow-[0_0_15px_rgba(0,115,150,0.25)]">
                 <FaJava className="w-4 h-4 text-[#007396]" /> Java
               </span>
             </div>
