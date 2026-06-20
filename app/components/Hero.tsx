@@ -207,7 +207,7 @@ export default function Hero() {
 
             <Magnetic>
               <a
-                href="/resume.pdf"
+                href="/Vihanga_Kulathilake_CV.pdf"
                 download
                 className="flex items-center gap-1.5 text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-accent-primary dark:hover:text-accent-primary transition-colors duration-300 border-b border-dashed border-slate-400 dark:border-slate-600 hover:border-accent-primary pb-0.5"
               >
